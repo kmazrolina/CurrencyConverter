@@ -1,10 +1,7 @@
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.util.*;
 import java.util.regex.*;
 import java.io.*;
 import java.net.*;
+
 
 class Converter {
 
@@ -59,15 +56,11 @@ class Converter {
 
     }
 
-    public static Scanner sc = new Scanner(System.in);
-
-    public static void main(String args[]) {
-        sc.useLocale(Locale.US);
-        Double bidAmt = sc.nextDouble();
-        String bidCurr = sc.next("[A-Z]{3}");
-        Double askAmt = 0.0;
-        String askCurr = sc.next("[A-Z]{3}");
-
+    public static double convertUtil(
+            double bidAmt,
+            String bidCurr,
+            double askAmt,
+            String askCurr) {
         boolean bidPLN = bidCurr.equals("PLN");
         boolean askPLN = askCurr.equals("PLN");
 
@@ -84,7 +77,11 @@ class Converter {
 
         }
 
-        System.out.format(Locale.US, "%.2f " + askCurr, askAmt);
+        return askAmt;
+    }
+
+
+    public static void main(String args[]) {
 
     }
 }
