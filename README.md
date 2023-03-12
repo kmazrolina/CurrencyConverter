@@ -1,11 +1,9 @@
 # CurrencyConverter
-## Table of contents
-* [General info](#general-info)
-* [Requirements](#requirements)
-* [How to run the application](#how-to-run-the-application)
 
 ## General info
 The project involves using the NBP (National Bank of Poland) [API](http://api.nbp.pl/) to create a currency conversion tool. The application has a simple graphical user interface (GUI) created using the javax.swing library. The tool will allow users to input a currency and amount, and then convert it to another currency based on current exchange rates provided by the NBP.
+![Zrzut ekranu 2023-03-12 o 20 20 39](https://user-images.githubusercontent.com/121491288/224567817-434b7074-067b-4de4-8191-95313d6455ac.jpg)
+
 	
 ## Requirements
 
