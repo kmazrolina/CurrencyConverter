@@ -1,7 +1,7 @@
 # Currency Converter
 
 ## General info
-The project involves using the NBP (National Bank of Poland) [API](http://api.nbp.pl/) to create a currency conversion tool. The application has a simple graphical user interface (GUI) created using the javax.swing library. The tool will allow users to input a currency and amount, and then convert it to another currency based on current exchange rates provided by the NBP.
+The project involves using the [NBP (National Bank of Poland) API](http://api.nbp.pl/) to create a currency conversion tool. The application has a simple graphical user interface (GUI) created using the javax.swing library. The tool will allow users to input a currency and amount, and then convert it to another currency based on current exchange rates provided by the NBP.
 	
 ## Requirements
 
