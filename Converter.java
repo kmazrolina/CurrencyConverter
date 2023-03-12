@@ -1,5 +1,6 @@
 import java.util.regex.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.io.*;
 import java.net.*;
 
@@ -9,36 +10,32 @@ class Converter {
     ArrayList<String> currencies;
    
     Converter(){
-        getCurrenciesUtil();
+        getCurrencies();
 
     }
 
-    public void getCurrencies(char AorB){
+    public void getCurrencies(){
+        currencies = new ArrayList<>();
         try{
             
-            
-            URL url = new URL("http://api.nbp.pl/api/exchangerates/tables/"+ AorB + "/");
+            URL url = new URL("http://api.nbp.pl/api/exchangerates/tables/C/");
             String data = getData(url);
-            data = data + getData(url);
+           
             Pattern codePtrn = Pattern.compile("code\":\"[A-Z]{3}");
             Matcher codeMtch = codePtrn.matcher(data);
-            codeMtch.find();
             
             while (codeMtch.find()) {
                 currencies.add(codeMtch.group().substring(7));
                 
             }
+        
             
         } catch (MalformedURLException e) {
         }
+        currencies.add("PLN");
+        Collections.sort(currencies);
     }
-    public void getCurrenciesUtil(){
-        currencies = new ArrayList<>();
-        getCurrencies('A');
-        getCurrencies('B');
-            
-        
-    }
+   
     public static String getData(URL url) {
         try (InputStream input = url.openStream()) {
             InputStreamReader isr = new InputStreamReader(input);
@@ -56,7 +53,7 @@ class Converter {
         }
     }
 
-    // kupno waluty
+    // returns how much askCurr can be bought for bidAmt of PLN 
     public double ask(double bidAmt, String askCurr) {
         try {
             URL askUrl = new URL("http://api.nbp.pl/api/exchangerates/rates/C/" + askCurr + "/");
@@ -73,7 +70,7 @@ class Converter {
 
     }
 
-    // spredaz waluty
+    // returns how much PLN can be aquired through selling for bidAmt of bidCurr
     public double bid(double bidAmt, String bidCurr) {
         try {
             URL bidUrl = new URL("http://api.nbp.pl/api/exchangerates/rates/C/" + bidCurr + "/");
@@ -90,6 +87,35 @@ class Converter {
 
     }
 
+    // returns how much PLN is required to buy askAmt of askCurr
+    public double requiredPLNtoCurr( double askAmt, String askCurr){
+       return askAmt / ask(1,askCurr);
+    }
+    
+    public double requiredCurrToPLN(double askAmt, String bidCurr){
+        return askAmt/ bid(1, bidCurr);
+    }
+    // returns how much bidCurr is required to buy askAmt of askCurr
+    public double requiredAmt(String bidCurr, double askAmt, String askCurr){
+        
+        if(bidCurr == askCurr){
+            return askAmt;
+        }
+        
+        if( askCurr == "PLN"){
+            return  requiredCurrToPLN(askAmt, bidCurr);
+        }
+
+        double requiredPLNAmt = requiredPLNtoCurr(askAmt, askCurr);
+        if(bidCurr == "PLN"){
+            return requiredPLNAmt;
+        }
+        
+        
+        return requiredCurrToPLN(requiredPLNAmt, bidCurr);
+     }
+
+   
     public double convertUtil(
             double bidAmt,
             String bidCurr,
