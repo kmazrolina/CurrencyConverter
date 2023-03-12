@@ -13,7 +13,7 @@ The project involves using the [NBP (National Bank of Poland) API](http://api.nb
 
 1. Clone or download the repository to your local machine
 2. Open the project in your Java IDE of choice
-3. Build and run the `GUI.java` file
+3. Build and run the `src/main/GUI.java` file
 
 ## How to use the application
 
