@@ -18,9 +18,11 @@ public class GUI extends JFrame implements ActionListener {
     static JComboBox<Object> sendCurrency;
     static JComboBox<Object> receiveCurrency;
 
+    static JLabel adnotation;
+
     static JFrame mainFrame;
 
-    static JButton convertButton;
+
 
     GUI(){}
     
@@ -54,7 +56,9 @@ public class GUI extends JFrame implements ActionListener {
         receivePanel.add(receiveCurrency);
         receivePanel.add(receiveAmount);
         
-       
+        adnotation = new JLabel("");
+        adnotation.setBounds(200, 300, 500,50);
+
 
         // Display the window.
         mainFrame = new JFrame("Currency Converter");
@@ -66,6 +70,7 @@ public class GUI extends JFrame implements ActionListener {
         mainFrame.add(sendPanel);
         mainFrame.add(receiveLabel);
         mainFrame.add(receivePanel);
+        mainFrame.add(adnotation);
         mainFrame.pack();
         mainFrame.setVisible(true);
 
@@ -83,6 +88,9 @@ public class GUI extends JFrame implements ActionListener {
             
             receiveAmount.setText(String.format(Locale.US,"%.2f", askAmt));
             
+            adnotation.setText("1.00 " + bidCurr + " = " + String.format(Locale.US,"%.2f",converter.convertUtil( 1,bidCurr, askCurr))+ " "+ askCurr);
+
+
         }else if(source.equals(receiveAmount)){
             double askAmt = Double.valueOf(receiveAmount.getText());
             String askCurr = receiveCurrency.getItemAt(receiveCurrency.getSelectedIndex()).toString();
@@ -90,6 +98,8 @@ public class GUI extends JFrame implements ActionListener {
             double bidAmt = converter.requiredAmt(bidCurr,  askAmt, askCurr);
             
             sendAmount.setText(String.format(Locale.US,"%.2f", bidAmt));
+            adnotation.setText("1.00 " + askCurr + " = " + String.format(Locale.US,"%.2f",converter.requiredAmt( bidCurr,1, askCurr))+ " "+ bidCurr);
+
         }
         
 
